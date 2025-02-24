@@ -1,0 +1,46 @@
+<ion-content [fullscreen]="true">
+  <div class="contenido">
+    <ion-title class="titulo">Registro</ion-title>
+    <ion-text class="rellenar">Rellena los siguientes datos personales</ion-text>
+
+    <form [formGroup]="registroForm" id="registro">
+      <ion-list class="lista">
+        <ion-text class="username">Usuario</ion-text>
+        <div class="contenedor">
+          <ion-input class="usernameInput" placeholder="Introduce tu usuario" fill="outline" formControlName="username"></ion-input>
+        </div>
+
+        <ion-text class="email">Email</ion-text>
+        <div class="contenedor">
+          <ion-input class="emailInput" [ngClass]="{'input-error': !registroForm.get('email')?.valid && registroForm.get('email')?.touched}" placeholder="Introduce tu email" fill="outline" formControlName="email"></ion-input>
+        </div>
+
+        <ion-text class="password">Contraseña</ion-text>
+        <div class="contenedor">
+          <ion-input class="passwordInput" placeholder="Introduce tu contraseña" fill="outline" formControlName="password" type="password"></ion-input>
+        </div>
+
+        <ion-text class="confirmarPassword">Confirmar contraseña</ion-text>
+        <div class="contenedor">
+          <ion-input
+            class="confirmarPasswordInput"
+            [ngClass]="{'input-error': registroForm.errors?.['noCoinciden'] && registroForm.get('confirmarPassword')?.touched}"
+            placeholder="Vuelve a introducir tu contraseña"
+            fill="outline"
+            formControlName="confirmarPassword"
+            type="password">
+          </ion-input>
+        </div>
+
+        <ion-checkbox (click)="verPoliticas()" formControlName="acceptTerms" labelPlacement="end" class="aceptarPoliticas">Acepto las políticas y condiciones</ion-checkbox>
+      </ion-list>
+    </form>
+
+    <div class="mismaLinea" (click)="navigateToLogin()">
+      <ion-text class="cuenta">¿Ya tienes una cuenta?</ion-text>
+      <ion-text class="iniciarSesion">Iniciar sesión</ion-text>
+    </div>
+
+    <ion-button expand="block" class="botonSiguiente" (click)="doRegister()" [disabled]="!registroForm.valid">Siguiente</ion-button>
+  </div>
+</ion-content>

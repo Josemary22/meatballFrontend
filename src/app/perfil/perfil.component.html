@@ -1,0 +1,48 @@
+<ion-header class="marronClaro navbar-superior">
+  <ion-toolbar class="marronClaro">
+    <div class="header-content">
+      <ion-title class="blanco">Perfil</ion-title>
+      <app-navbar-superior></app-navbar-superior>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-img class="fotoPerfil" [src]="perfil.fotoPerfilLink || 'assets/icon/foto_perfil.webp'" alt="FotoPerfil"></ion-img>
+
+  <ng-container *ngIf="!fromVerPublicacion">
+    <ion-title class="nombreUsuario">{{ perfil.username }}</ion-title>
+  </ng-container>
+
+  <ng-container *ngIf="fromVerPublicacion">
+    <ion-title class="nombreUsuario">{{ perfil.username }}</ion-title>
+  </ng-container>
+
+  <ion-label class="seguidores">{{ seguidores }} seguidores - {{ seguidos }} seguidos</ion-label>
+  <ion-label class="fraseRecetas">Recetas</ion-label>
+
+  <div *ngIf="filteredItems.length === 0" class="no-publicaciones">
+    <ion-icon name="image-outline"></ion-icon>
+    <ion-label>No tiene publicaciones</ion-label>
+  </div>
+
+  <div *ngIf="filteredItems.length > 0" class="image-grid">
+    <div class="image-item" *ngFor="let item of filteredItems">
+      <img [src]="item.imagenLink" [alt]="item.titulo" (click)="navigateToVerPublicacion(item)">
+      <div class="image-title">{{ item.titulo }}</div>
+      <ion-icon *ngIf="!fromVerPublicacion" name="trash-outline" class="close-icon" (click)="item.id ? confirmarEliminarPublicacion(item.id) : null"></ion-icon>
+    </div>
+  </div>
+</ion-content>
+
+<ion-button *ngIf="!fromVerPublicacion" expand="block" class="editarPerfil" (click)="nagivateToConfiguracionPerfil()">Editar Perfil</ion-button>
+
+<div *ngIf="fromVerPublicacion" class="contenedorBotones">
+  <ion-button expand="block" class="seguirPerfil" [class.siguiendo]="siguiendo" (click)="toggleSeguir()">
+    {{ siguiendo ? 'Siguiendo' : 'Seguir' }}
+  </ion-button>
+  <ion-button expand="block" class="enviarMensaje" (click)="navigateToMensajes(perfil.id)">Enviar Mensaje</ion-button>
+  <ion-button expand="block" class="reportarUsuario" (click)="reportarUsuario(perfil.id)">Reportar Usuario</ion-button>
+</div>
+
+<app-navbar-inferior></app-navbar-inferior>

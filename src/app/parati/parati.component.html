@@ -1,0 +1,44 @@
+<ion-header class="marronClaro">
+  <ion-toolbar class="marronClaro">
+    <div class="header-content">
+      <ion-title class="blanco">Para ti</ion-title>
+      <app-navbar-superior></app-navbar-superior>
+      <ion-label class="blanco" style="margin-left: auto; font-size: 15px; cursor: pointer;" (click)="navigateToLogin()">Cerrar Sesión</ion-label>    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="publicaciones.length > 0">
+    <div class="posicion">
+      <ion-text>Recetas de seguidos/as.</ion-text>
+    </div>
+
+    <div class="container">
+      <swiper-container class="mySwiper" init="false" style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff"
+                        pagination="true" pagination-clickable="true" navigation="true">
+        <swiper-slide *ngFor="let publicacion of publicaciones">
+          <img [src]="publicacion.imagenLink" alt="Imagen de {{publicacion.titulo}}" (click)="navigateToVerPublicacion(publicacion)">
+          <div class="image-title">{{publicacion.titulo}}</div>
+        </swiper-slide>
+      </swiper-container>
+    </div>
+  </div>
+
+  <div class="posicion2">
+    <ion-text>Recomendaciones</ion-text>
+  </div>
+
+  <div class="container">
+    <swiper-container class="mySwiper" init="false" style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff"
+                      pagination="true" pagination-clickable="true" navigation="true">
+      <swiper-slide *ngFor="let publicacion of publicacionesAleatorias">
+        <img [src]="publicacion.imagenLink" alt="Imagen de {{publicacion.titulo}}" (click)="navigateToVerPublicacion(publicacion)">
+        <div class="image-title">{{publicacion.titulo}}</div>
+      </swiper-slide>
+    </swiper-container>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
+</ion-content>
+
+<app-navbar-inferior></app-navbar-inferior>

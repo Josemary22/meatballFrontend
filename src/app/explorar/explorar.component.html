@@ -1,0 +1,74 @@
+<ion-header class="marronClaro">
+  <ion-toolbar class="marronClaro">
+    <div class="header-content">
+      <ion-title class="blanco">Explorar</ion-title>
+      <app-navbar-superior></app-navbar-superior>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card-content>
+    <div class="search-filter-container buscador">
+      <ion-searchbar
+        class="searchbar-blanco"
+        placeholder="Escribe tu búsqueda..."
+        [(ngModel)]="searchText"
+        (ionInput)="onSearch()"
+        showCancelButton="focus"
+      ></ion-searchbar>
+
+      <span class="filter-asterisk" (click)="openFilterModal()">▼</span>
+    </div>
+  </ion-card-content>
+
+  <div class="image-grid">
+    <div class="image-item" *ngFor="let item of filteredItems" (click)="navigateToVerPublicacion(item)">
+      <img [src]="item.imagenLink" [alt]="item.titulo">
+      <p>{{ item.titulo }}</p>
+    </div>
+  </div>
+</ion-content>
+
+<app-navbar-inferior></app-navbar-inferior>
+
+<ion-modal [isOpen]="isFilterModalOpen" (didDismiss)="closeFilterModal()" class="custom-modal">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title class="modal-title">Filtrar</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeFilterModal()">Cerrar</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list>
+        <ion-item>
+          <ion-select
+            [(ngModel)]="selectedIngredientes"
+            (ionChange)="onFilterChange()"
+            multiple="true"
+            placeholder="Ingredientes"
+          >
+            <ion-select-option *ngFor="let ingrediente of ingredientes" [value]="ingrediente">
+              {{ ingrediente }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-select
+            [(ngModel)]="selectedEtiquetas"
+            (ionChange)="onFilterChange()"
+            multiple="true"
+            placeholder="Etiquetas"
+          >
+            <ion-select-option *ngFor="let etiqueta of etiquetas" [value]="etiqueta">
+              {{ etiqueta }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ng-template>
+</ion-modal>
